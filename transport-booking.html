@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PunyaYatra | Transport Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body{font-family:Inter, sans-serif; background:linear-gradient(135deg,#0c0c0c,#1a1a1a); color:#fff;}
+    /* make card slightly lighter for readability */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border:1px solid rgba(212,175,55,0.08); color:var(--bs-body-color);} 
+    /* Inputs: light background and dark text for readability */
+    .form-control{background:#fff; color:#111; border-radius:6px;}
+    .form-control::placeholder{color:#666;}
+    label.form-label{color: #f1f1f1; font-weight:600}
+    .text-muted{color:rgba(255,255,255,0.75) !important}
+    .btn-gold{background:linear-gradient(135deg,#d4af37,#ffd700); color:#111}
+    .alert-success{background:linear-gradient(90deg,#e9f6e9,#f6fff6); color:#053; border:1px solid rgba(0,0,0,0.06)}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="home.html"><i class="fas fa-om me-2"></i>PunyaYatra</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="transport.html">Transport</a></li>
+      </ul>
+        </div>
+      </div>
+</nav>
+
+<main class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card p-4">
+        <h3 id="pageTitle">Transport Booking</h3>
+        
+
+        <form id="transportForm" novalidate>
+          <div class="mb-3">
+            <label class="form-label">Transport Type</label>
+            <input id="transportType" name="transportType" class="form-control" required />
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">From</label>
+              <input id="from" name="from" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">To</label>
+              <input id="to" name="to" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Date</label>
+              <input id="date" name="date" type="date" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Passengers</label>
+              <input id="passengers" name="passengers" type="number" min="1" value="1" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Contact Phone</label>
+              <input id="phone" name="phone" type="tel" class="form-control" placeholder="+91xxxxxxxxxx" required />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+              <button id="submitBtn" class="btn btn-gold me-2" type="submit"><i class="fas fa-check me-1"></i> Book Transport</button>
+              <a href="transport.html" class="btn btn-outline-light">Back</a>
+            </div>
+            <div id="pricePreview" class="text-muted">Estimated: -</div>
+          </div>
+        </form>
+
+        <div id="confirmation" style="display:none" class="mt-4">
+          <div class="alert alert-success">
+            <h5>Booking Confirmed</h5>
+            <p id="confText"></p>
+            <p><strong>Reference:</strong> <span id="confRef"></span></p>
+            <div class="mt-2">
+              <button id="printBtn" class="btn btn-sm btn-light me-2">Print</button>
+              <button id="newBtn" class="btn btn-sm btn-outline-light">New Booking</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Check for user session
+  const userString = sessionStorage.getItem('punyatra_user');
+  if (!userString) {
+    location.href = 'login.html';
+  } else {
+    const user = JSON.parse(userString);
+
+    // parse query string and prefill transport type if present
+    function qs(){ return Object.fromEntries(new URLSearchParams(location.search)); }
+    const params = qs();
+    const transportInput = document.getElementById('transportType');
+    if(params.transport){ transportInput.value = decodeURIComponent(params.transport.replace(/\+/g,' ')); document.getElementById('pageTitle').innerText = transportInput.value + ' Booking'; }
+
+    const form = document.getElementById('transportForm');
+    const conf = document.getElementById('confirmation');
+    const confText = document.getElementById('confText');
+    const confRef = document.getElementById('confRef');
+    const pricePreview = document.getElementById('pricePreview');
+
+    function estimatePrice(type, passengers){
+      if(!type) return '-';
+      const t = type.toLowerCase();
+      let base = 500;
+      if(t.includes('bus')) base = 400;
+      if(t.includes('train')) base = 250;
+      if(t.includes('flight')) base = 2000;
+      if(t.includes('car')) base = 1200;
+      if(t.includes('taxi')|| t.includes('auto')) base = 100;
+      if(t.includes('private')) base = 3000;
+      return '₹' + (base * Math.max(1, Number(passengers||1)));
+    }
+
+    // live price preview
+    ['transportType','passengers'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.addEventListener('input', ()=>{
+        pricePreview.innerText = 'Estimated: ' + estimatePrice(document.getElementById('transportType').value, document.getElementById('passengers').value);
+      });
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!form.reportValidity()) return;
+      
+      const bookingDetails = Object.fromEntries(new FormData(form).entries());
+      const userId = user._id;
+
+      fetch('http://localhost:3000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, bookingDetails }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Booking created successfully') {
+          confText.innerHTML = `We have received your booking for <strong>${escapeHtml(bookingDetails.transportType)}</strong> from <strong>${escapeHtml(bookingDetails.from)}</strong> to <strong>${escapeHtml(bookingDetails.to)}</strong> on <strong>${escapeHtml(bookingDetails.date)}</strong> for <strong>${escapeHtml(bookingDetails.passengers)}</strong> passenger(s). Contact: ${escapeHtml(bookingDetails.phone)}.`;
+          confRef.innerText = data.booking._id;
+          form.style.display = 'none';
+          conf.style.display = '';
+        } else {
+          alert(data.message || 'An error occurred.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      });
+    });
+
+    document.getElementById('newBtn').addEventListener('click', ()=>{ form.style.display=''; conf.style.display='none'; form.reset(); pricePreview.innerText='Estimated: -'; });
+    document.getElementById('printBtn').addEventListener('click', ()=>{ window.print(); });
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c];
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details | PunyaYatra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .amenity-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary); }
+        body {
+            background: linear-gradient(135deg,#0b0b0b,#161616) !important;
+        }
+        .card.sticky-top {
+            background: #222 !important;
+            color: #fff !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+        }
+        .card.sticky-top .form-label {
+            color: #fff !important;
+        }
+        .card.sticky-top .form-control {
+            background: rgba(255,255,255,0.05) !important;
+            color: #fff !important;
+            border-color: rgba(255,255,255,0.2) !important;
+        }
+        .flatpickr-input {
+            background: rgba(255,255,255,0.05) !important;
+            color: #fff !important;
+            border: 1px solid rgba(255,255,255,0.2) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-premium">
+        <div class="container">
+            <a class="navbar-brand brand-name" href="home.html"><i class="fas fa-om"></i>PunyaYatra</a>
+        </div>
+    </nav>
+
+    <main class="container py-5" style="padding-top: 120px !important;">
+        <div id="hotelDetailsContainer">
+            <!-- Hotel details will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Footer content -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hotelName = urlParams.get('hotel');
+
+            const hotelDetailsData = {
+                'Taj Mahal Palace, Mumbai': {
+                    description: 'Iconic luxury hotel with views of the Gateway of India.',
+                    price: 12000,
+                    amenities: {'wifi': 'Free Wi-Fi', 'swimming-pool': 'Swimming Pool', 'spa': 'Spa', 'dumbbell': 'Gym', 'utensils': 'Restaurant', 'martini-glass-citrus': 'Bar'},
+                    gallery: [
+                        'img/hotel1.jpg',
+                        'img/hotel2.jpg',
+                        'img/hotel3.jpg'
+                    ],
+                    reviews: [
+                        { author: 'John Doe', rating: 5, comment: 'Amazing experience! The view was breathtaking.' },
+                        { author: 'Jane Smith', rating: 4, comment: 'Great service and beautiful rooms.' },
+                        { author: 'A Concerned Traveler', rating: 2, comment: 'The location is great, but the room was smaller than expected and a bit noisy. The content on the details page is also a bit lacking and the layout could be improved.' }
+                    ],
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3774.262533838869!2d72.8333556148988!3d18.921984087178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1c1bfa773d3%3A0x3f49c2a5e1b6a7f!2sThe%20Taj%20Mahal%20Palace%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1678886343831!5m2!1sen!2sin'
+                },
+                'Oberoi Udaivilas, Udaipur': {
+                    description: 'Palatial lakeside resort with Mughal-inspired architecture.',
+                    price: 25000,
+                    amenities: {'wifi': 'Free Wi-Fi', 'swimming-pool': 'Swimming Pool', 'spa': 'Spa', 'utensils': 'Restaurant', 'martini-glass-citrus': 'Bar', 'plane': 'Airport shuttle'},
+                    gallery: [
+                        'img/hotel4.png',
+                        'img/hotel1.jpg',
+                        'img/hotel2.jpg'
+                    ],
+                    reviews: [
+                        { author: 'Peter Jones', rating: 5, comment: 'A truly royal experience. Felt like a king!' },
+                        { author: 'Mary Williams', rating: 5, comment: 'Unforgettable stay. The property is stunning.' }
+                    ],
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3628.249952399227!2d73.67833861500001!3d24.580000084189!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e5ab24f5123d%3A0x1e73521f1e48e28c!2sThe%20Oberoi%20Udaivilas%2C%20Udaipur!5e0!3m2!1sen!2sin!4v1678886343831!5m2!1sen!2sin'
+                },
+                'The Leela Palace, New Delhi': {
+                    description: 'Luxurious palace hotel near diplomatic enclave.',
+                    price: 11000,
+                    amenities: {'wifi': 'Free Wi-Fi', 'swimming-pool': 'Swimming Pool', 'spa': 'Spa', 'dumbbell': 'Gym', 'utensils': 'Restaurant', 'martini-glass-citrus': 'Bar', 'briefcase': 'Business Center'},
+                    gallery: [
+                        'img/hotel3.jpg',
+                        'img/hotel4.png',
+                        'img/hotel1.jpg'
+                    ],
+                    reviews: [
+                        { author: 'David Brown', rating: 4, comment: 'Excellent service and very comfortable rooms.' },
+                        { author: 'Susan Garcia', rating: 5, comment: 'The best hotel I have ever stayed in. Pure luxury.' }
+                    ],
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.331595978314!2d77.156765715089!3d28.590000082434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d6b8f3d3e3b%3A0x1b8de21515d9ce6a!2sThe%20Leela%20Palace%20New%20Delhi!5e0!3m2!1sen!2sin!4v1678886343831!5m2!1sen!2sin'
+                },
+                'Taj Lake Palace, Udaipur': {
+                    description: 'Romantic palace hotel set in the middle of Lake Pichola.',
+                    price: 28000,
+                    amenities: {'wifi': 'Free Wi-Fi', 'swimming-pool': 'Swimming Pool', 'spa': 'Spa', 'utensils': 'Restaurant', 'martini-glass-citrus': 'Bar', 'ship': 'Boat tours'},
+                    gallery: [
+                        'img/hotel2.jpg',
+                        'img/hotel3.jpg',
+                        'img/hotel4.png'
+                    ],
+                    reviews: [
+                        { author: 'Michael Miller', rating: 5, comment: 'A magical place. The location is unbeatable.' },
+                        { author: 'Linda Davis', rating: 5, comment: 'Felt like living in a dream. Highly recommended.' }
+                    ],
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3628.249952399227!2d73.67833861500001!3d24.580000084189!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e5a5e2a5b5d5%3A0x4f2b8b5b5e2a5b5d!2sTaj%20Lake%20Palace!5e0!3m2!1sen!2sin!4v1678886343831!5m2!1sen!2sin'
+                },
+                'The Oberoi Amarvilas, Agra': {
+                    description: 'Luxury stay with direct views of the Taj Mahal from many rooms.',
+                    price: 22000,
+                    amenities: {'wifi': 'Free Wi-Fi', 'swimming-pool': 'Swimming Pool', 'spa': 'Spa', 'dumbbell': 'Gym', 'utensils': 'Restaurant', 'martini-glass-citrus': 'Bar', 'eye': 'Taj Mahal view'},
+                    gallery: [
+                        'img/hotel1.jpg',
+                        'img/hotel2.jpg',
+                        'img/hotel4.png'
+                    ],
+                    reviews: [
+                        { author: 'James Wilson', rating: 5, comment: 'Waking up to the view of the Taj Mahal was priceless.' },
+                        { author: 'Barbara Moore', rating: 5, comment: 'The service was impeccable. A must-stay in Agra.' }
+                    ],
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.3600000000003!2d78.042115915058!3d27.175144983025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39747121d7e23a6d%3A0x3b5f5b5f5b5f5b5d!2sThe%20Oberoi%20Amarvilas%2C%20Agra!5e0!3m2!1sen!2sin!4v1678886343831!5m2!1sen!2sin'
+                }
+            };
+
+            const hotel = hotelDetailsData[hotelName];
+            const container = document.getElementById('hotelDetailsContainer');
+
+            if (hotel) {
+                let galleryHtml = '<div id="hotelCarousel" class="carousel slide" data-bs-ride="carousel"><div class="carousel-inner">';
+                hotel.gallery.forEach((img, index) => {
+                    galleryHtml += `<div class="carousel-item ${index === 0 ? 'active' : ''}"><img src="${img}" class="d-block w-100" alt="Hotel image" style="height: 500px; object-fit: cover;"></div>`;
+                });
+                galleryHtml += '</div><button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button></div>';
+
+                let amenitiesHtml = '<div class="row g-3">';
+                for (const [icon, text] of Object.entries(hotel.amenities)) {
+                    amenitiesHtml += `<div class="col-md-4 col-6 d-flex align-items-center gap-2"><div class="amenity-icon"><i class="fas fa-${icon}"></i></div><span>${text}</span></div>`;
+                }
+                amenitiesHtml += '</div>';
+
+                let reviewsHtml = '';
+                hotel.reviews.forEach(review => {
+                    reviewsHtml += `<div class="card mb-3"><div class="card-body"><h5 class="card-title">${review.author} <span class="text-warning">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</span></h5><p class="card-text">${review.comment}</p></div></div>`;
+                });
+
+                container.innerHTML = `
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h1 class="mb-2">${hotelName}</h1>
+                            <p class="text-muted">Mumbai, India</p>
+                            ${galleryHtml}
+                            <h2 class="mt-4">Description</h2>
+                            <p>${hotel.description}</p>
+                            <h2 class="mt-4">Amenities</h2>
+                            ${amenitiesHtml}
+                            <h2 class="mt-4">Location</h2>
+                            <div class="map-responsive mt-2">
+                                <iframe src="${hotel.map}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card sticky-top" style="top: 120px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Check Availability</h5>
+                                    <div class="mb-3">
+                                        <label for="datepicker" class="form-label">Check-in & Check-out</label>
+                                        <input type="text" class="form-control" id="datepicker" placeholder="Select dates">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="guests" class="form-label">Guests</label>
+                                            <input type="number" id="guests" class="form-control" value="2" min="1">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="rooms" class="form-label">Rooms</label>
+                                            <input type="number" id="rooms" class="form-control" value="1" min="1">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Total Price:</span>
+                                        <span id="totalPrice">₹0</span>
+                                    </div>
+                                    <a href="#" id="bookNowBtn" class="btn btn-primary w-100 mt-3">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h2 class="mt-4">Reviews</h2>
+                            ${reviewsHtml}
+                        </div>
+                    </div>
+                `;
+
+                const datepicker = flatpickr("#datepicker", {
+                    mode: "range",
+                    minDate: "today",
+                    dateFormat: "Y-m-d",
+                    onChange: function(selectedDates, dateStr, instance) {
+                        updatePrice();
+                    }
+                });
+
+                const guestsInput = document.getElementById('guests');
+                const roomsInput = document.getElementById('rooms');
+                guestsInput.addEventListener('change', updatePrice);
+                roomsInput.addEventListener('change', updatePrice);
+
+                function updatePrice() {
+                    const dates = datepicker.selectedDates;
+                    if (dates.length === 2) {
+                        const nights = (dates[1] - dates[0]) / (1000 * 60 * 60 * 24);
+                        const guests = parseInt(guestsInput.value);
+                        const rooms = parseInt(roomsInput.value);
+                        const totalPrice = hotel.price * nights * rooms;
+                        document.getElementById('totalPrice').textContent = `₹${totalPrice.toLocaleString()}`;
+                    } else {
+                        document.getElementById('totalPrice').textContent = '₹0';
+                    }
+                }
+
+                document.getElementById('bookNowBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dates = datepicker.selectedDates;
+                    if (dates.length < 2) {
+                        alert('Please select a check-in and check-out date.');
+                        return;
+                    }
+                    const checkin = dates[0].toISOString().slice(0,10);
+                    const checkout = dates[1].toISOString().slice(0,10);
+                    let url = `hotel-booking.html?hotel=${encodeURIComponent(hotelName)}`;
+                    if (checkin) url += `&checkin=${checkin}`;
+                    if (checkout) url += `&checkout=${checkout}`;
+                    window.location.href = url;
+                });
+
+            } else {
+                container.innerHTML = '<p>Hotel not found.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

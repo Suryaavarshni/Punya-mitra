@@ -1,0 +1,32 @@
+.temple-details-container {
+    padding-top: 120px;
+    color: #fff;
+}
+
+.temple-details-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.temple-details-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.temple-details-card {
+    background: rgba(30,30,30,0.6);
+    border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.temple-details-card h5 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}

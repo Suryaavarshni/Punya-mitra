@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PunyaYatra | Contact Us</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <!-- Premium Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-premium">
+    <div class="container">
+      <a class="navbar-brand brand-name" href="home.html"><i class="fas fa-om"></i>PunyaYatra</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPremium">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarPremium">
+        <ul class="navbar-nav mx-auto nav-single-line">
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="home.html"><i class="fas fa-home nav-icon"></i>Home</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="temples.html"><i class="fas fa-gopuram nav-icon"></i>Temples</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="hotels.html"><i class="fas fa-hotel nav-icon"></i>Hotels</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="transport.html"><i class="fas fa-bus nav-icon"></i>Transport</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-premium" href="packages.html"><i class="fas fa-box nav-icon"></i>Packages</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-premium active" href="contact.html"><i class="fas fa-phone nav-icon"></i>Contact Us</a></li>
+        </ul>
+
+        <div class="nav-right-buttons">
+          <!-- Login Button (replaced Sign Up) -->
+          <a href="login.html" class="nav-link nav-link-premium sign-up-btn" id="navLoginBtn">
+              <i class="fas fa-sign-in-alt me-2"></i>Login
+          </a>
+         
+                                      <!-- User dropdown shown after login -->
+                                      <div id="navUserDropdown" class="dropdown" style="display:none; margin-left:12px;">
+                                          <a class="nav-link nav-link-premium dropdown-toggle" href="#" role="button" id="userDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="display:flex; align-items:center; gap:8px;">
+                                              <i class="fas fa-user-circle"></i>
+                                              <span id="navUserName" style="font-weight:600; color:var(--light);"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenuLink">
+                                              <li><a class="dropdown-item" href="my-bookings.html">My Bookings</a></li>
+                                              <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+                                          </ul>
+                                      </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="row gy-4">
+      <div class="col-12 text-center">
+        <h1 class="mt-4">Get in touch</h1>
+        <p class="text-muted">Questions about packages, bookings or custom pilgrimages? Send us a message and we'll get back to you.</p>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="card contact-card p-4">
+          <h4>Contact Form</h4>
+          <p class="text-muted">We aim to respond within 24 hours.</p>
+
+          <form id="contactForm" novalidate>
+            <div class="mb-3">
+              <label for="name" class="form-label">Your name</label>
+              <input id="name" name="name" class="form-control" required />
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" name="email" type="email" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label for="phone" class="form-label">Phone</label>
+                <input id="phone" name="phone" type="tel" class="form-control" placeholder="+91xxxxxxxxxx" />
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <button type="submit" class="btn btn-book-primary"><i class="fas fa-paper-plane me-1"></i> Send Message</button>
+                <button type="reset" class="btn btn-outline-light ms-2">Reset</button>
+              </div>
+              <div id="inlineSuccess" class="alert alert-success alert-success-inline mb-0" role="alert">
+                Message sent — we'll reply shortly.
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="contact-info p-3">
+          <h5>Office</h5>
+          <p><i class="fas fa-map-marker-alt me-2"></i>Chennai, Tamil Nadu</p>
+          <p><i class="fas fa-phone me-2"></i>+91 98765 43210</p>
+          <p><i class="fas fa-envelope me-2"></i>info@punyayatra.com</p>
+
+          <h6 class="mt-4">Business hours</h6>
+          <p class="mb-1">Mon - Sat: 09:00 - 18:00</p>
+          <p>Sun: Closed</p>
+
+          <h6 class="mt-4">Location</h6>
+          <div class="map-responsive mt-2">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248646.0972003645!2d80.04419919583803!3d13.04786155242073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6863d433!2sChennai%2C%20Tamil%20Nadu%2C%20India!5e0!3m2!1sen!2sus!4v1678886343831!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h5><i class="fas fa-om me-2"></i>PunyaYatra</h5>
+                    <p class="mt-3">Your trusted companion for spiritual journeys across India's sacred temples. We make pilgrimage planning simple, comfortable, and meaningful.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-5">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links mt-3">
+                        <a href="home.html">Home</a>
+                        <a href="temples.html">Temples</a>
+                        <a href="hotels.html">Hotels</a>
+                        <a href="transport.html">Transport</a>
+                        <a href="packages.html">Packages</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-5">
+                    <h5>Popular Temples</h5>
+                    <div class="footer-links mt-3">
+                        <a href="temple-details.html?temple=Tirupati Balaji">Tirupati Balaji</a>
+                        <a href="temple-details.html?temple=Vaishno Devi">Vaishno Devi</a>
+                        <a href="temple-details.html?temple=Harmandir Sahib (Golden Temple)">Golden Temple</a>
+                        <a href="temple-details.html?temple=Kedarnath">Kedarnath</a>
+                        <a href="temple-details.html?temple=Sabarimala">Sabarimala</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-5">
+                    <h5>Contact Us</h5>
+                    <div class="footer-links mt-3">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Chennai, Tamil Nadu</p>
+                        <p><i class="fas fa-phone me-2"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@punyayatra.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 PunyaYatra | Spiritual Journey Planner. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!this.reportValidity()) return;
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+
+      fetch('http://localhost:3000/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, phone, message }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Message sent successfully') {
+          document.getElementById('inlineSuccess').style.display = 'block';
+          document.getElementById('contactForm').reset();
+          setTimeout(() => {
+            document.getElementById('inlineSuccess').style.display = 'none';
+          }, 3000);
+        } else {
+          alert('Failed to send message: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      });
+    });
+  </script>
+
+<script src="scripts.js"></script>
+</body>
+</html>

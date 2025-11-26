@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotel Booking - PunyaYatra</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container py-5">
+    <h1 class="mb-3" id="hotelName">Hotel Booking</h1>
+    <div id="bookingFlow">
+
+      <!-- Step 1: Dates and Guests -->
+      <div id="step-dates" class="mt-4">
+        <h4>Step 1: Select Dates & Guests</h4>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Check-in Date</label>
+                <input id="checkinDate" type="date" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Check-out Date</label>
+                <input id="checkoutDate" type="date" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Number of Guests</label>
+                <input id="numGuests" type="number" class="form-control" value="2" min="1">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Number of Rooms</label>
+                <input id="numRooms" type="number" class="form-control" value="1" min="1">
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <button id="btnSelectRoom" class="btn btn-warning text-dark">Select Room</button>
+            <a href="hotels.html" class="btn btn-outline-light">Cancel</a>
+        </div>
+      </div>
+
+      <!-- Step 2: Select Room -->
+      <div id="step-room" class="mt-4" style="display:none;">
+        <h4>Step 2: Select Your Room</h4>
+        <div id="roomOptions"></div>
+        <div class="d-flex gap-2 mt-3">
+            <button id="btnBackToDates" class="btn btn-outline-light">Back</button>
+            <button id="btnProceedToPayment" class="btn btn-warning text-dark" disabled>Proceed to Payment</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Payment -->
+      <div id="step-payment" class="mt-4" style="display:none;">
+        <h4>Step 3: Payment</h4>
+        <div class="card bg-light text-dark p-3 mb-3">
+            <h5>Booking Summary</h5>
+            <p class="mb-1">Hotel: <span id="summaryHotel">-</span></p>
+            <p class="mb-1">Dates: <span id="summaryDates">-</span></p>
+            <p class="mb-1">Room: <span id="summaryRoom">-</span></p>
+            <hr>
+            <p class="fw-bold">Total Amount: ₹<span id="summaryTotal">0</span></p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Card number</label>
+          <input id="cardNumber" type="text" class="form-control" placeholder="4242 4242 4242 4242">
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Expiry</label>
+            <input id="cardExpiry" type="text" class="form-control" placeholder="MM/YY">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">CVC</label>
+            <input id="cardCvc" type="text" class="form-control" placeholder="123">
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <button id="btnPay" class="btn btn-success">Pay & Confirm</button>
+          <button id="btnBackToRoom" class="btn btn-outline-light">Back</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Confirmation -->
+      <div id="step-confirm" class="mt-4" style="display:none;">
+        <div class="tick-wrap">
+          <div class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div>
+            <div class="confirm-title">Booking Confirmed</div>
+            <p id="confirmText" class="lead mb-0"></p>
+          </div>
+        </div>
+        <div class="mt-3">
+          <a href="my-bookings.html" class="btn btn-outline-light">View My Bookings</a>
+          <button id="btnPrint" class="btn btn-primary">Print Confirmation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParam(name){
+      const params = new URLSearchParams(location.search);
+      return params.get(name) || '';
+    }
+
+    const hotelName = decodeURIComponent(getQueryParam('hotel') || '');
+    const checkinDate = getQueryParam('checkin');
+    const checkoutDate = getQueryParam('checkout');
+
+    document.getElementById('hotelName').textContent = hotelName;
+
+    const stepDates = document.getElementById('step-dates');
+    const stepRoom = document.getElementById('step-room');
+    const stepPayment = document.getElementById('step-payment');
+    const stepConfirm = document.getElementById('step-confirm');
+
+    const btnSelectRoom = document.getElementById('btnSelectRoom');
+    const btnBackToDates = document.getElementById('btnBackToDates');
+    const btnProceedToPayment = document.getElementById('btnProceedToPayment');
+    const btnBackToRoom = document.getElementById('btnBackToRoom');
+    const btnPay = document.getElementById('btnPay');
+    const btnPrint = document.getElementById('btnPrint');
+
+    const roomOptions = document.getElementById('roomOptions');
+    let selectedRoom = null;
+    let totalPrice = 0;
+
+    const hotelData = {
+        'Taj Mahal Palace, Mumbai': { price: 12000, rooms: [{name: 'Deluxe Room', price: 12000}, {name: 'Sea View Room', price: 15000}, {name: 'Suite', price: 25000}] },
+        'Oberoi Udaivilas, Udaipur': { price: 25000, rooms: [{name: 'Premier Room', price: 25000}, {name: 'Lake View Room', price: 30000}, {name: 'Suite with Private Pool', price: 50000}] },
+        'The Leela Palace, New Delhi': { price: 11000, rooms: [{name: 'Grande Deluxe Room', price: 11000}, {name: 'Royal Club Room', price: 14000}, {name: 'Executive Suite', price: 20000}] },
+        'Taj Lake Palace, Udaipur': { price: 28000, rooms: [{name: 'Luxury Room', price: 28000}, {name: 'Palace Room', price: 35000}, {name: 'Royal Suite', price: 60000}] },
+        'The Oberoi Amarvilas, Agra': { price: 22000, rooms: [{name: 'Premier Room', price: 22000}, {name: 'Deluxe Suite with Balcony', price: 28000}, {name: 'Luxury Suite', price: 45000}] }
+    };
+
+    const currentHotel = hotelData[hotelName];
+
+    if (checkinDate && checkoutDate) {
+        document.getElementById('checkinDate').value = checkinDate;
+        document.getElementById('checkoutDate').value = checkoutDate;
+        stepDates.style.display = 'none';
+        stepRoom.style.display = 'block';
+        renderRoomOptions();
+    }
+
+    btnSelectRoom.addEventListener('click', function() {
+        const checkin = document.getElementById('checkinDate').value;
+        const checkout = document.getElementById('checkoutDate').value;
+        if (!checkin || !checkout) {
+            alert('Please select check-in and check-out dates.');
+            return;
+        }
+        stepDates.style.display = 'none';
+        stepRoom.style.display = 'block';
+        renderRoomOptions();
+    });
+
+    btnBackToDates.addEventListener('click', function() {
+        stepRoom.style.display = 'none';
+        stepDates.style.display = 'block';
+    });
+
+    function renderRoomOptions() {
+        roomOptions.innerHTML = '';
+        if (currentHotel && currentHotel.rooms) {
+            currentHotel.rooms.forEach(room => {
+                roomOptions.innerHTML += `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">${room.name}</h5>
+                            <p class="card-text">Price: ₹${room.price.toLocaleString()} per night</p>
+                            <button class="btn btn-sm btn-outline-warning select-room-btn" data-room-name="${room.name}" data-room-price="${room.price}">Select</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    roomOptions.addEventListener('click', function(e) {
+        if (e.target.classList.contains('select-room-btn')) {
+            selectedRoom = {
+                name: e.target.dataset.roomName,
+                price: parseInt(e.target.dataset.roomPrice)
+            };
+            btnProceedToPayment.disabled = false;
+            // Highlight selected room
+            document.querySelectorAll('.select-room-btn').forEach(btn => btn.classList.remove('btn-warning', 'text-dark'));
+            e.target.classList.add('btn-warning', 'text-dark');
+        }
+    });
+
+    btnProceedToPayment.addEventListener('click', function() {
+        stepRoom.style.display = 'none';
+        stepPayment.style.display = 'block';
+        updateSummary();
+    });
+    
+    btnBackToRoom.addEventListener('click', function() {
+        stepPayment.style.display = 'none';
+        stepRoom.style.display = 'block';
+    });
+
+    function updateSummary() {
+        const checkin = new Date(document.getElementById('checkinDate').value);
+        const checkout = new Date(document.getElementById('checkoutDate').value);
+        const nights = (checkout - checkin) / (1000 * 60 * 60 * 24);
+        const numRooms = parseInt(document.getElementById('numRooms').value);
+        totalPrice = selectedRoom.price * nights * numRooms;
+
+        document.getElementById('summaryHotel').textContent = hotelName;
+        document.getElementById('summaryDates').textContent = `${document.getElementById('checkinDate').value} to ${document.getElementById('checkoutDate').value} (${nights} nights)`;
+        document.getElementById('summaryRoom').textContent = `${selectedRoom.name} (x${numRooms})`;
+        document.getElementById('summaryTotal').textContent = totalPrice.toLocaleString();
+    }
+
+    btnPay.addEventListener('click', function(){
+      const card = document.getElementById('cardNumber').value.trim();
+      if (!card) { alert('Enter card number'); return; }
+      btnPay.disabled = true;
+      btnPay.innerText = 'Processing...';
+
+      const userString = sessionStorage.getItem('punyatra_user');
+      if (!userString) {
+        alert('You must be logged in to make a booking.');
+        location.href = 'login.html';
+        return;
+      }
+      const user = JSON.parse(userString);
+      const userId = user._id;
+
+      const bookingDetails = {
+        service: 'Hotel',
+        name: hotelName,
+        checkin: document.getElementById('checkinDate').value,
+        checkout: document.getElementById('checkoutDate').value,
+        guests: document.getElementById('numGuests').value,
+        rooms: document.getElementById('numRooms').value,
+        roomType: selectedRoom.name,
+        totalAmount: totalPrice,
+        date: new Date().toISOString()
+      };
+
+      fetch('http://localhost:3000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, bookingDetails }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Booking created successfully') {
+          setTimeout(()=> {
+            btnPay.disabled = false;
+            btnPay.innerText = 'Pay & Confirm';
+            stepPayment.style.display = 'none';
+            stepConfirm.style.display = '';
+            confirmText.innerHTML = `Your booking at <strong>${hotelName}</strong> from <strong>${bookingDetails.checkin}</strong> to <strong>${bookingDetails.checkout}</strong> is confirmed.`;
+            const tickEl = document.querySelector('.tick');
+            if (tickEl){
+              tickEl.animate([
+                { transform: 'scale(0.9)' },
+                { transform: 'scale(1.06)' },
+                { transform: 'scale(1)' }
+              ], { duration: 600, easing: 'cubic-bezier(.2,.9,.3,1)' });
+            }
+          }, 1200);
+        } else {
+          alert(data.message);
+          btnPay.disabled = false;
+          btnPay.innerText = 'Pay & Confirm';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        btnPay.disabled = false;
+        btnPay.innerText = 'Pay & Confirm';
+      });
+    });
+
+    btnPrint.addEventListener('click', function() {
+        window.print();
+    });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

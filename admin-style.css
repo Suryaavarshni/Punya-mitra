@@ -1,0 +1,117 @@
+body {
+  background-color: #0c0c0c;
+}
+
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  width: 260px;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar .brand-name {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.admin-sidebar .nav-link {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-sidebar .nav-link.active,
+.admin-sidebar .nav-link:hover {
+  background: var(--primary);
+  color: #000;
+  transform: translateX(5px);
+}
+
+.admin-main-content {
+  flex-grow: 1;
+  padding: 40px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+}
+
+.stat-card h4 {
+  color: var(--primary);
+}
+
+.form-control {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: none !important;
+  padding: 10px 12px;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.form-control:focus {
+  outline: 3px solid rgba(212, 175, 55, 0.12);
+  box-shadow: none !important;
+}
+
+.table-dark-transparent {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+.table-dark-transparent th,
+.table-dark-transparent td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table-dark-transparent th {
+  color: var(--primary);
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary);
+}
+
+.table-dark-transparent tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.table-dark-transparent tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-dark-transparent tbody tr:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+}

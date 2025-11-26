@@ -1,0 +1,111 @@
+{
+  "users": [
+    {
+      "id": 1759728839057,
+      "name": "Suryaa",
+      "email": "sachin@gmail.com",
+      "password": "sachin141",
+      "role": "admin"
+    },
+    {
+      "id": 1759730119312,
+      "name": "varshini",
+      "email": "AAAA.23csd@kongu.edu",
+      "password": "AAA",
+      "role": "user"
+    },
+    {
+      "id": 1759768194108,
+      "name": "varshini",
+      "email": "suryaa@gmail.com",
+      "password": "12345",
+      "role": "user"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1759768278227,
+      "userId": 1759768194108,
+      "bookingDetails": {
+        "temple": "Thanjavur Brihadeeswarar",
+        "date": "2025-10-22",
+        "time": "06:00 AM"
+      }
+    },
+    {
+      "id": 1759768303334,
+      "userId": 1759768194108,
+      "bookingDetails": {
+        "temple": "Thanjavur Brihadeeswarar",
+        "date": "2025-10-09",
+        "time": "06:00 AM"
+      }
+    },
+    {
+      "id": 1759768349217,
+      "userId": 1759768194108,
+      "bookingDetails": {
+        "type": "Hotel",
+        "temple": "bnm",
+        "date": "2025-10-08",
+        "time": "N/A",
+        "guests": "2",
+        "rooms": "1"
+      }
+    },
+    {
+      "id": 1759857050171,
+      "userId": 1759728839057,
+      "bookingDetails": {
+        "title": "Premium Experience",
+        "startDate": "2025-10-04",
+        "endDate": "N/A",
+        "description": "Lead Passenger: qwerty, Passengers: 2, Contact: 6381465959"
+      }
+    }
+  ],
+  "transport": [
+    {
+      "id": 1,
+      "name": "Intercity Bus Services",
+      "description": "Affordable coach connections between major pilgrimage towns.",
+      "price": 400,
+      "image": "TRANSPORT.JPG"
+    },
+    {
+      "id": 2,
+      "name": "Train Reservations",
+      "description": "Convenient sleeper and day trains connecting major temples.",
+      "price": 250,
+      "image": "TRANSPORT.JPG"
+    },
+    {
+      "id": 3,
+      "name": "Flight Booking",
+      "description": "Search and book flights for longer-distance pilgrimages.",
+      "price": 2000,
+      "image": "TRANSPORT.JPG"
+    },
+    {
+      "id": 4,
+      "name": "Car Rental",
+      "description": "Self-drive or chauffeur-driven cars for local journeys.",
+      "price": 1200,
+      "image": "TRANSPORT.JPG"
+    },
+    {
+      "id": 5,
+      "name": "Local Taxi & Auto",
+      "description": "Quick point-to-point rides and short-distance pickups.",
+      "price": 80,
+      "image": "TRANSPORT.JPG"
+    },
+    {
+      "id": 6,
+      "name": "Private Driver Service",
+      "description": "Hire a trusted driver for multi-day pilgrim routes.",
+      "price": 3000,
+      "image": "TRANSPORT.JPG"
+    }
+  ]
+}

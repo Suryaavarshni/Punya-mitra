@@ -1,0 +1,717 @@
+:root {
+    --primary: #d4af37;
+    --primary-dark: #b8941f;
+    --primary-light: #f4e4a6;
+    --secondary: #8b4513;
+    --accent: #ffd700;
+    --dark: #1a1a1a;
+    --light: #ffffff;
+    --gray: #f8f9fa;
+    --text: #333333;
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-dark: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg,#0b0b0b,#161616);
+    color: #fff;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+/* Premium Navigation */
+.navbar-premium {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 15px 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-scrolled {
+    padding: 10px 0;
+    background: rgba(10, 10, 10, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.brand-name i {
+    margin-right: 12px;
+    font-size: 1.8rem;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Single Line Navigation */
+.nav-single-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.nav-single-line .nav-item {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.nav-link-premium {
+    color: var(--light) !important;
+    margin: 0 2px;
+    padding: 10px 15px !important;
+    border-radius: 50px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.nav-icon {
+    font-size: 0.9rem;
+    margin-right: 6px;
+    width: 16px;
+    text-align: center;
+}
+
+.nav-link-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.nav-link-premium:hover::before {
+    left: 100%;
+}
+
+.nav-link-premium:hover {
+    color: var(--primary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.nav-link-premium.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--primary) !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Right Side Buttons Container */
+.nav-right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+/* Sign Up Button */
+.sign-up-btn {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary) !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sign-up-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.sign-up-btn:hover::before {
+    left: 100%;
+}
+
+.sign-up-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* CTA Button */
+.nav-cta {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--dark) !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.nav-cta:hover::before {
+    left: 100%;
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+}
+
+/* Dropdown Menu */
+.dropdown-premium .dropdown-menu {
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    margin-top: 10px;
+    animation: dropdownFade 0.3s ease;
+    min-width: 200px;
+}
+
+.dropdown-item-premium {
+    color: var(--light);
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.dropdown-item-premium::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: var(--primary);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.dropdown-item-premium:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary);
+    padding-left: 25px;
+}
+
+.dropdown-item-premium:hover::before {
+    transform: scaleY(1);
+}
+
+/* Rest of your CSS remains the same */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    background: linear-gradient(45deg, var(--primary), var(--accent), var(--primary-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--dark);
+    border: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.hero-btn:hover::before {
+    left: 100%;
+}
+
+.hero-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+}
+
+/* Section Styles */
+.section {
+    padding: 120px 0;
+    position: relative;
+}
+
+.section-light {
+    background:
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+}
+
+.section-dark {
+    background: linear-gradient(135deg, #080808 0%, #141414 100%);
+}
+
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 70px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 2px;
+}
+
+/* Temple Cards */
+.temple-card {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    height: 100%;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.temple-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    z-index: 2;
+}
+
+.temple-card:hover::before {
+    transform: scaleX(1);
+}
+
+.temple-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.temple-card-content {
+    padding: 25px;
+}
+
+.temple-card h5 {
+    color: var(--light);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.temple-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.temple-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.temple-card:hover img {
+    transform: scale(1.1);
+}
+
+.temple-card-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.temple-card-body {
+    padding: 25px;
+}
+
+.temple-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+.temple-card-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Feature Cards */
+.feature-card {
+    text-align: center;
+    padding: 40px 30px;
+    border-radius: 20px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    height: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-icon {
+    font-size: 3.5rem;
+    color: var(--primary);
+    margin-bottom: 25px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+}
+
+.feature-card h4 {
+    color: var(--light);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.2);
+}
+
+/* Testimonials */
+.testimonial-card {
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    height: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    font-size: 5rem;
+    color: rgba(212, 175, 55, 0.2);
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonial-author {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.testimonial-location {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #080808 0%, #0c0c0c 100%);
+    padding: 80px 0 30px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.footer h5 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Booking page extra styles */
+#bookingFlow { max-width:720px; margin:0 auto; }
+#step-select, #step-payment, #step-confirm { background: rgba(255,255,255,0.03); padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); }
+.btn-warning.text-dark { background: linear-gradient(90deg,#ffd666,#ffcc00); border: none; }
+.btn-outline-light { border-color: rgba(255,255,255,0.12); }
+/* Animated tick */
+.tick-wrap { display:flex; align-items:center; gap:16px; }
+.tick { width:76px; height:76px; border-radius:50%; background:linear-gradient(135deg,#22c55e,#16a34a); display:inline-flex; align-items:center; justify-content:center; box-shadow:0 8px 30px rgba(16,185,129,0.18); }
+.tick svg { width:44px; height:44px; stroke:#fff; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; fill:none; stroke-dasharray:100; stroke-dashoffset:100; transform-origin:center; animation:dash 0.6s ease-out forwards 0.15s; }
+@keyframes dash { to { stroke-dashoffset:0; } }
+.confirm-title { font-size:1.25rem; font-weight:600; }
+.lead { color: rgba(255,255,255,0.9); }
+
+/* Contact and form helpers used by contact.html */
+.contact-card{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border:1px solid rgba(212,175,55,0.06); border-radius:12px; }
+.contact-info p{ color: rgba(255,255,255,0.9); }
+.map-placeholder{ background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15)); height:220px; border-radius:8px; display:flex; align-items:center; justify-content:center; color: rgba(255,255,255,0.6); }
+
+/* Primary booking / action button used across booking/contact pages */
+.btn-book-primary{ background: linear-gradient(135deg,var(--accent),var(--primary)); color:var(--dark); font-weight:700; border-radius:8px; padding:8px 14px; border:none; box-shadow: 0 6px 20px rgba(212,175,55,0.22); }
+.btn-book-primary:hover, .btn-book-primary:focus{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212,175,55,0.32); }
+
+/* Ensure main content is visible below fixed navbar */
+main { padding-top: 110px; }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.2rem; }
+  .hero-section { height: auto; padding:120px 20px 40px; }
+}
+
+
+.text-muted { color: rgba(255,255,255,0.9) !important; }
+
+/* Make navbar links and brand pop more on dark backgrounds */
+.nav-link-premium { color: rgba(255,255,255,0.96) !important; }
+.navbar-premium { background: rgba(5,5,5,0.94); border-bottom-color: rgba(212,175,55,0.24); }
+
+/* Improve card and form contrast */
+.contact-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
+.contact-card h4, .contact-card .form-label, label { color: #ffffff; }
+
+/* Dark-themed form controls with clear text */
+.form-control {
+  background: rgba(255,255,255,0.03) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: none !important;
+}
+.form-control::placeholder { color: rgba(255,255,255,0.6) !important; }
+
+/* Buttons and small helpers */
+.btn-outline-light { color: #fff; border-color: rgba(255,255,255,0.18); }
+.map-placeholder { color: rgba(255,255,255,0.9); }
+.footer { color: rgba(255,255,255,0.95); }
+
+/* Ensure inline success message is readable */
+.alert-success-inline { display:none; background: rgba(0,128,0,0.12); color: #dfffd6; border: 1px solid rgba(0,128,0,0.16); }
+
+
+.booking-wrap { max-width:900px; margin:40px auto; }
+.room-thumb { width:100%; height:220px; object-fit:cover; border-radius:8px; }
+.price-box { background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); }
+.btn-primary-punya { background: linear-gradient(135deg,#d4af37,#ffd700); color:#111; border:none; }
+
+.btn-book {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--dark);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.btn-book:hover::before {
+    left: 100%;
+}
+
+.btn-book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+    color: var(--dark);
+}
+
+/* Responsive map in contact page */
+.map-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+    border-radius: 12px;
+}
+.map-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}

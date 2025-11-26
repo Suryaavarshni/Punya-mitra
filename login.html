@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PunyaYatra | Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+  :root {
+    --primary: #d4af37;
+    --accent: #ffd700;
+    --dark: #111;
+    --light: #fff;
+  }
+
+  /* Reset basics */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg,#0c0c0c,#1a1a1a);
+    color: var(--light);
+    line-height: 1.6;
+  }
+
+  h1,h2,h3,h4,h5{ font-family: 'Playfair Display', serif; font-weight:600; }
+
+  /* Premium Navigation */
+  .navbar-premium {
+    background: rgba(10,10,10,0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(212,175,55,0.18);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: all .35s ease;
+  }
+
+  .navbar-scrolled { padding: 10px 0; background: rgba(10,10,10,0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    background: linear-gradient(45deg,var(--primary),var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    display: flex; align-items: center;
+  }
+
+  .nav-single-line { display:flex; gap:6px; align-items:center; justify-content:center; }
+
+  .nav-link-premium {
+    color: var(--light) !important;
+    padding: 10px 14px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all .25s ease;
+    display:flex; align-items:center;
+  }
+
+  .nav-link-premium .nav-icon { margin-right:8px; font-size:0.95rem; }
+  .nav-link-premium:hover { transform: translateY(-2px); color: var(--primary) !important; box-shadow: 0 6px 18px rgba(212,175,55,0.12); }
+  .nav-link-premium.active { background: rgba(212,175,55,0.12); color: var(--primary) !important; box-shadow: 0 0 12px rgba(212,175,55,0.14); }
+
+  .nav-right-buttons { margin-left:auto; display:flex; gap:10px; align-items:center; }
+
+  .sign-up-btn { border:2px solid var(--primary); color:var(--primary) !important; border-radius:50px; padding:8px 16px; }
+  .nav-cta { background: linear-gradient(135deg,var(--primary),var(--accent)); color:var(--dark); border-radius:50px; padding:8px 16px; }
+
+  /* Hero */
+  .hero-section { height: 70vh; display:flex; align-items:center; justify-content:center; text-align:center; position:relative; overflow:hidden; padding-top:100px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size:3.6rem; line-height:1.05; background: linear-gradient(45deg,var(--primary),var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-subtitle { color: rgba(255,255,255,0.85); margin: 18px 0 0; }
+  .hero-btn { background: linear-gradient(135deg,var(--primary),var(--accent)); color:var(--dark); padding:12px 28px; border-radius:50px; font-weight:600; }
+
+  /* Cards & sections */
+  .section { padding: 80px 0; }
+  .section-light { background: linear-gradient(135deg,#0c0c0c,#141414); }
+  .temple-card, .package-card { background: rgba(30,30,30,0.6); border-radius:12px; padding:18px; border:1px solid rgba(212,175,55,0.08); color:var(--light); }
+
+  /* Book button default (overridden per-page if needed) */
+  .book-btn { background: linear-gradient(135deg,var(--primary),var(--accent)); color:var(--dark) !important; border-radius:8px; padding:6px 12px; font-weight:700; box-shadow: 0 6px 18px rgba(212,175,55,0.2); }
+
+  /* Footer */
+  .footer { padding: 48px 0; background: transparent; color: rgba(255,255,255,0.9); }
+  .footer a { color: rgba(255,255,255,0.85); text-decoration:none; display:block; margin:6px 0; }
+
+  /* Contact and form helpers used by contact.html */
+  .contact-card{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border:1px solid rgba(212,175,55,0.06); border-radius:12px; }
+  .contact-info p{ color: rgba(255,255,255,0.9); }
+  .map-placeholder{ background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15)); height:220px; border-radius:8px; display:flex; align-items:center; justify-content:center; color: rgba(255,255,255,0.6); }
+
+  /* Primary booking / action button used across booking/contact pages */
+  .btn-book-primary{ background: linear-gradient(135deg,var(--accent),var(--primary)); color:var(--dark); font-weight:700; border-radius:8px; padding:8px 14px; border:none; box-shadow: 0 6px 20px rgba(212,175,55,0.22); }
+  .btn-book-primary:hover, .btn-book-primary:focus{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212,175,55,0.32); }
+
+  /* Ensure main content is visible below fixed navbar */
+  main { padding-top: 110px; }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .hero-title { font-size: 2.2rem; }
+    .hero-section { height: auto; padding:120px 20px 40px; }
+  }
+
+  /* Contrast / visibility overrides */
+  body { color: #f7f7f7; }
+  .text-muted { color: rgba(255,255,255,0.9) !important; }
+
+  /* Make navbar links and brand pop more on dark backgrounds */
+  .nav-link-premium { color: rgba(255,255,255,0.96) !important; }
+  .navbar-premium { background: rgba(5,5,5,0.94); border-bottom-color: rgba(212,175,55,0.24); }
+
+  /* Improve card and form contrast */
+  .contact-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
+  .contact-card h4, .contact-card .form-label, label { color: #ffffff; }
+
+  /* Dark-themed form controls with clear text */
+  .form-control {
+    background: rgba(255,255,255,0.03) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    box-shadow: none !important;
+  }
+  .form-control::placeholder { color: rgba(255,255,255,0.6) !important; }
+
+  /* Buttons and small helpers */
+  .btn-outline-light { color: #fff; border-color: rgba(255,255,255,0.18); }
+  .map-placeholder { color: rgba(255,255,255,0.9); }
+  .footer { color: rgba(255,255,255,0.95); }
+
+  /* Ensure inline success message is readable */
+  .alert-success-inline { display:none; background: rgba(0,128,0,0.12); color: #dfffd6; border: 1px solid rgba(0,128,0,0.16); }
+
+  /* Strong visibility overrides for login page */
+  body { color: #ffffff; }
+  .text-muted { color: rgba(255,255,255,0.86) !important; }
+
+  /* Card contrast: slightly darker card with clear border */
+  .card { background: rgba(0,0,0,0.55) !important; border: 1px solid rgba(255,255,255,0.10) !important; }
+  .card h3, .card p, .card label { color: #ffffff !important; }
+
+  /* Form controls: darker translucent background, white text, visible border */
+  .form-control {
+    background: rgba(255,255,255,0.04) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    box-shadow: none !important;
+    padding: 10px 12px;
+  }
+  .form-control::placeholder { color: rgba(255,255,255,0.62) !important; }
+  .form-control:focus { outline: 3px solid rgba(212,175,55,0.12); box-shadow: none !important; }
+
+  /* Buttons */
+  .btn-book-primary { background: linear-gradient(135deg,var(--accent),var(--primary)); color: #111 !important; font-weight:700; }
+  .btn-outline-light { color: #fff; border-color: rgba(255,255,255,0.20); }
+
+  /* Navbar link readability */
+  .nav-link-premium { color: #ffffff !important; font-weight:600; }
+  .brand-name { -webkit-background-clip: text; background-clip: text; }
+
+  /* Ensure success alert is visible when shown */
+  #loginSuccess { background: rgba(0,128,0,0.12); color: #eaffea; border: 1px solid rgba(0,128,0,0.18); }
+    /* Custom login hero layout */
+    .login-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(1200px 600px at 10% 20%, rgba(212,175,55,0.06), transparent 8%), radial-gradient(900px 400px at 90% 80%, rgba(255,215,0,0.04), transparent 8%), linear-gradient(180deg,#070707 0%, #141414 100%);
+    }
+
+    .login-hero .hero-inner {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 40px;
+      align-items: center;
+      padding: 48px;
+    }
+
+    .login-brand {
+      color: #fff;
+      text-align: left;
+    }
+    .login-brand .logo {
+      font-size: 72px;
+      color: var(--primary);
+      filter: drop-shadow(0 8px 24px rgba(212,175,55,0.12));
+      margin-bottom: 10px;
+    }
+    .login-brand h1 { font-size: 2.6rem; margin-bottom: 8px; }
+    .login-brand p { color: rgba(255,255,255,0.86); margin-bottom: 18px; }
+
+    .login-card-wrap { display:flex; align-items:center; justify-content:center; }
+    .login-card {
+      width:100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px) saturate(120%);
+    }
+    .login-card h3 { margin-bottom: 6px; }
+    .login-card .text-muted { color: rgba(255,255,255,0.75); }
+
+    /* Center simple layout on narrow screens */
+    @media (max-width: 900px) {
+      .login-hero .hero-inner { grid-template-columns: 1fr; padding: 28px; }
+      .login-brand { text-align: center; }
+    }
+
+    </style>
+  </head>
+  <body>
+
+    <header class="login-hero">
+      <div class="hero-inner">
+        <div class="login-brand">
+          <div class="logo"><i class="fas fa-om"></i></div>
+          <h1>PunyaYatra</h1>
+          <p>Plan pilgrimages & book with confidence — sign in to manage your trips.</p>
+        </div>
+
+        <div class="login-card-wrap">
+          <div class="login-card">
+            <h3>Welcome back</h3>
+            <p class="text-muted">Sign in to manage your bookings.</p>
+            <form id="loginForm" novalidate>
+              <div class="mb-3">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" class="form-control" placeholder="Your email" required />
+              </div>
+              <div class="mb-3">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" class="form-control" required />
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember Me</label>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <button class="btn btn-book-primary" type="submit"><i class="fas fa-sign-in-alt me-1"></i> Sign In</button>
+                <a href="#" class="text-muted small">Forgot Password?</a>
+              </div>
+              <div class="text-center mt-3">
+                <a href="create-account.html" class="btn btn-outline-light">Create Account</a>
+              </div>
+            </form>
+            <div class="text-center mt-3">
+              <a href="admin-login.html" class="text-muted small">Admin Login</a>
+            </div>
+            <div id="loginSuccess" class="alert alert-success mt-3" style="display:none">Login successful! Redirecting...</div>
+            <div id="loginError" class="alert alert-danger mt-3" style="display:none"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!this.reportValidity()) return;
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('loginError');
+      const successDiv = document.getElementById('loginSuccess');
+
+      fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Login successful') {
+          if(errorDiv) errorDiv.style.display = 'none';
+          successDiv.style.display = 'block';
+          const rememberMe = document.getElementById('rememberMe').checked;
+          try {
+            if (rememberMe) {
+              localStorage.setItem('punyatra_user', JSON.stringify(data.user));
+            } else {
+              sessionStorage.setItem('punyatra_user', JSON.stringify(data.user));
+            }
+          } catch (err) {
+            // ignore storage errors
+          }
+          setTimeout(function() {
+            location.href = 'home.html';
+          }, 900);
+        } else {
+          if(successDiv) successDiv.style.display = 'none';
+          errorDiv.textContent = data.message;
+          errorDiv.style.display = 'block';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        if(successDiv) successDiv.style.display = 'none';
+        errorDiv.textContent = 'An error occurred. Please try again.';
+        errorDiv.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Booking - PunyaYatra</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="style.css">
+    <div class="container py-5">
+    <h1 class="mb-3">Book Darshan</h1>
+    <div id="bookingFlow">
+      <p id="info" class="lead">Loading...</p>
+
+      <div id="step-select" class="mt-4">
+        <label class="form-label">Choose a date</label>
+        <input id="bookingDate" type="date" class="form-control mb-3">
+
+        <label class="form-label">Choose a time</label>
+        <select id="bookingTime" class="form-select mb-3">
+          <option value="" data-price="0">Select a time</option>
+          <option data-price="100">06:00 AM (Free Darshan)</option>
+          <option data-price="250">08:00 AM (Special Darshan)</option>
+          <option data-price="250">10:00 AM (Special Darshan)</option>
+          <option data-price="100">12:00 PM (Free Darshan)</option>
+          <option data-price="250">02:00 PM (Special Darshan)</option>
+          <option data-price="500">04:00 PM (VIP Darshan)</option>
+          <option data-price="500">06:00 PM (VIP Darshan)</option>
+        </select>
+
+        <label class="form-label">Number of Members</label>
+        <input id="bookingMembers" type="number" class="form-control mb-3" value="1" min="1">
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" value="" id="specialDarshan">
+          <label class="form-check-label" for="specialDarshan">
+            Add Special Prasad (₹150)
+          </label>
+        </div>
+
+        <div class="card bg-light text-dark p-3 mb-3">
+            <h5>Booking Summary</h5>
+            <p class="mb-1">Date: <span id="summaryDate">-</span></p>
+            <p class="mb-1">Time: <span id="summaryTime">-</span></p>
+            <hr>
+            <p class="fw-bold">Total Amount: ₹<span id="totalAmount">0</span></p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button id="btnProceedPayment" class="btn btn-warning text-dark" disabled>Proceed to Payment</button>
+          <a href="temples.html" class="btn btn-outline-light">Cancel</a>
+        </div>
+      </div>
+
+      <div id="step-payment" class="mt-4" style="display:none;">
+        <h5>Payment</h5>
+        
+        <div class="mb-3">
+          <label class="form-label">Card number</label>
+          <input id="cardNumber" type="text" class="form-control" placeholder="4242 4242 4242 4242">
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Expiry</label>
+            <input id="cardExpiry" type="text" class="form-control" placeholder="MM/YY">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">CVC</label>
+            <input id="cardCvc" type="text" class="form-control" placeholder="123">
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <button id="btnPay" class="btn btn-success">Pay & Confirm</button>
+          <button id="btnBack" class="btn btn-outline-light">Back</button>
+        </div>
+      </div>
+
+      <div id="step-confirm" class="mt-4" style="display:none;">
+        <div class="tick-wrap">
+          <div class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div>
+            <div class="confirm-title">Booking Confirmed</div>
+            <p id="confirmText" class="lead mb-0"></p>
+          </div>
+        </div>
+        <div class="mt-3">
+          <a href="temples.html" class="btn btn-outline-light">Back to Temples</a>
+          <button id="btnPrint" class="btn btn-primary">Print Confirmation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParam(name){
+      const params = new URLSearchParams(location.search);
+      return params.get(name) || '';
+    }
+
+    const temple = decodeURIComponent(getQueryParam('temple') || '');
+    const info = document.getElementById('info');
+    const bookingDate = document.getElementById('bookingDate');
+    const bookingTime = document.getElementById('bookingTime');
+    const bookingMembers = document.getElementById('bookingMembers');
+    const specialDarshan = document.getElementById('specialDarshan');
+    const summaryDate = document.getElementById('summaryDate');
+    const summaryTime = document.getElementById('summaryTime');
+    const totalAmount = document.getElementById('totalAmount');
+    const btnProceedPayment = document.getElementById('btnProceedPayment');
+    const stepSelect = document.getElementById('step-select');
+    const stepPayment = document.getElementById('step-payment');
+    const stepConfirm = document.getElementById('step-confirm');
+    const btnPay = document.getElementById('btnPay');
+    const btnBack = document.getElementById('btnBack');
+    const confirmText = document.getElementById('confirmText');
+
+    if (temple) {
+      info.innerHTML = 'You are booking darshan for: <strong>' + temple + '</strong>.';
+    } else {
+      info.innerText = 'No temple specified. You can return to the temples list and select one.';
+    }
+
+    function updateTotal() {
+        const timeOption = bookingTime.options[bookingTime.selectedIndex];
+        const timePrice = parseInt(timeOption.dataset.price) || 0;
+        const members = parseInt(bookingMembers.value) || 1;
+        const specialDarshanPrice = specialDarshan.checked ? 150 : 0;
+        const total = (timePrice * members) + specialDarshanPrice;
+
+        summaryDate.textContent = bookingDate.value || '-';
+        summaryTime.textContent = timeOption.value ? timeOption.text : '-';
+        totalAmount.textContent = total;
+
+        if (bookingDate.value && bookingTime.value) {
+            btnProceedPayment.disabled = false;
+        } else {
+            btnProceedPayment.disabled = true;
+        }
+    }
+
+    bookingDate.addEventListener('change', updateTotal);
+    bookingTime.addEventListener('change', updateTotal);
+    bookingMembers.addEventListener('change', updateTotal);
+    specialDarshan.addEventListener('change', updateTotal);
+
+    // Basic validation then show payment step
+    btnProceedPayment.addEventListener('click', function(){
+      const dateVal = bookingDate.value;
+      const timeVal = bookingTime.value;
+      if (!dateVal) { alert('Please choose a date'); bookingDate.focus(); return; }
+      if (!timeVal) { alert('Please choose a time'); bookingTime.focus(); return; }
+      // show payment
+      stepSelect.style.display = 'none';
+      stepPayment.style.display = '';
+    });
+
+    btnBack.addEventListener('click', function(){
+      stepPayment.style.display = 'none';
+      stepSelect.style.display = '';
+    });
+
+    // Mock payment processing with small success animation
+    btnPay.addEventListener('click', function(){
+      const card = document.getElementById('cardNumber').value.trim();
+      if (!card) { alert('Enter card number'); return; }
+      btnPay.disabled = true;
+      btnPay.innerText = 'Processing...';
+
+      const userString = sessionStorage.getItem('punyatra_user');
+      if (!userString) {
+        alert('You must be logged in to make a booking.');
+        location.href = 'login.html';
+        return;
+      }
+      const user = JSON.parse(userString);
+      const userId = user._id;
+      const dateVal = bookingDate.value;
+      const timeVal = bookingTime.value;
+      const membersVal = bookingMembers.value;
+      const amount = totalAmount.textContent;
+
+      const bookingDetails = {
+        temple: temple,
+        date: dateVal,
+        time: timeVal,
+        members: membersVal,
+        amount: amount
+      };
+
+      fetch('http://localhost:3000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, bookingDetails }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Booking created successfully') {
+          // small progress UX: fade out payment then show confirmation with tick animation
+          setTimeout(()=>{
+            btnPay.disabled = false;
+            btnPay.innerText = 'Pay & Confirm';
+            stepPayment.style.display = 'none';
+            stepConfirm.style.display = '';
+            confirmText.innerHTML = 'Your darshan at <strong>' + (temple || 'selected temple') + '</strong> is confirmed for <strong>' + dateVal + '</strong> at <strong>' + timeVal + '</strong> for a total of <strong>₹' + amount + '</strong>.';
+            // Pulse the tick circle briefly
+            const tickEl = document.querySelector('.tick');
+            if (tickEl){
+              tickEl.animate([
+                { transform: 'scale(0.9)' },
+                { transform: 'scale(1.06)' },
+                { transform: 'scale(1)' }
+              ], { duration: 600, easing: 'cubic-bezier(.2,.9,.3,1)' });
+            }
+          }, 1200);
+        } else {
+          alert(data.message);
+          btnPay.disabled = false;
+          btnPay.innerText = 'Pay & Confirm';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        btnPay.disabled = false;
+        btnPay.innerText = 'Pay & Confirm';
+      });
+    });
+
+    document.getElementById('btnPrint').addEventListener('click', function() {
+        window.print();
+    });
+  </script>
+  <script src="scripts.js"></script>
+</body>
+</html>

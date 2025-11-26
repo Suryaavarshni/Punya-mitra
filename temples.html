@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PunyaYatra | Temples</title>
+   
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+   
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Inline premium styles (copied from home.html) -->
+    <style>
+:root {
+    --primary: #d4af37;
+    --primary-dark: #b8941f;
+    --primary-light: #f4e4a6;
+    --secondary: #8b4513;
+    --accent: #ffd700;
+    --dark: #1a1a1a;
+    --light: #ffffff;
+    --gray: #f8f9fa;
+    --text: #333333;
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-dark: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+    color: var(--light);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+/* Premium Navigation */
+.navbar-premium {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 15px 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-scrolled {
+    padding: 10px 0;
+    background: rgba(10, 10, 10, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.brand-name i {
+    margin-right: 12px;
+    font-size: 1.8rem;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Single Line Navigation */
+.nav-single-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.nav-single-line .nav-item {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.nav-link-premium {
+    color: var(--light) !important;
+    margin: 0 2px;
+    padding: 10px 15px !important;
+    border-radius: 50px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.nav-icon {
+    font-size: 0.9rem;
+    margin-right: 6px;
+    width: 16px;
+    text-align: center;
+}
+
+.nav-link-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.nav-link-premium:hover::before {
+    left: 100%;
+}
+
+.nav-link-premium:hover {
+    color: var(--primary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.nav-link-premium.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--primary) !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Right Side Buttons Container */
+.nav-right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+/* Sign Up Button */
+.sign-up-btn {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary) !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-cta {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--dark) !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Hero + Sections */
+.hero-section { position: relative; height: 60vh; display:flex; align-items:center; justify-content:center; }
+.hero-title{ font-size: 3rem; font-weight:700; }
+.section{ padding: 80px 0; }
+.temple-card{ border-radius:16px; overflow:hidden; background: rgba(30,30,30,0.6); border:1px solid rgba(212,175,55,0.1); }
+.temple-card img{ width:100%; height:200px; object-fit:cover; }
+.footer{ padding:40px 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Premium Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-premium">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand brand-name" href="home.html">
+                <i class="fas fa-om"></i>PunyaYatra
+            </a>
+           
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPremium">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+           
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarPremium">
+                <ul class="navbar-nav mx-auto nav-single-line">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-premium" href="home.html">
+                            <i class="fas fa-home nav-icon"></i>Home
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-premium active" href="temples.html">
+                            <i class="fas fa-gopuram nav-icon"></i>Temples
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-premium" href="hotels.html">
+                            <i class="fas fa-hotel nav-icon"></i>Hotels
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-premium" href="transport.html">
+                            <i class="fas fa-bus nav-icon"></i>Transport
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-premium" href="packages.html">
+                            <i class="fas fa-box nav-icon"></i>Packages
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-premium" href="contact.html">
+                            <i class="fas fa-phone nav-icon"></i>Contact Us
+                        </a>
+                    </li>
+                </ul>
+               
+                <!-- Right Side Buttons -->
+                <div class="nav-right-buttons">
+                    <!-- Login Button (replaced Sign Up) -->
+                    <a href="login.html" class="nav-link nav-link-premium sign-up-btn" id="navLoginBtn">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                   
+                                        <!-- User dropdown shown after login -->
+                                        <div id="navUserDropdown" class="dropdown" style="display:none; margin-left:12px;">
+                                            <a class="nav-link nav-link-premium dropdown-toggle" href="#" role="button" id="userDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="display:flex; align-items:center; gap:8px;">
+                                                <i class="fas fa-user-circle"></i>
+                                                <span id="navUserName" style="font-weight:600; color:var(--light);"></span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenuLink">
+                                                <li><a class="dropdown-item" href="my-bookings.html">My Bookings</a></li>
+                                                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+                                            </ul>
+                                        </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="container text-center hero-content" data-aos="fade-up">
+            <h1 class="hero-title">Explore Sacred Temples</h1>
+            <p class="hero-subtitle">Browse famous temples, learn visiting tips, and plan your pilgrimage with PunyaYatra.</p>
+        </div>
+    </section>
+
+    <!-- Temples Grid -->
+    <section class="section section-light">
+        <div class="container">
+            <!-- Controls: Filter / Sort / Search -->
+            <style>
+                .search-elevate { margin-top: -40px; }
+                @media (max-width: 768px) { .search-elevate { margin-top: -20px; } }
+                .card-action-btn { min-width:72px; }
+
+                .book-btn-premium {
+                    background: linear-gradient(135deg, var(--primary), var(--accent));
+                    color: var(--dark) !important;
+                    border-radius: 50px;
+                    padding: 8px 16px !important;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+                    position: relative;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    border: none;
+                }
+
+                .book-btn-premium:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+                }
+
+                .learn-more-premium {
+                    background: transparent;
+                    border: 2px solid var(--primary);
+                    color: var(--primary) !important;
+                    border-radius: 50px;
+                    padding: 6px 12px !important;
+                    font-weight: 600;
+                    font-size: 0.8rem;
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .learn-more-premium:hover {
+                    background: var(--primary);
+                    color: var(--dark) !important;
+                }
+
+            </style>
+            <div class="row mb-3">
+                <div class="col-12">
+                                <div class="row mb-4 search-elevate" data-aos="fade-up">
+                                    <div class="col-md-6 mx-auto">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            <input id="templeSearch" type="search" class="form-control" placeholder="Search temples by name or description...">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mx-auto">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-filter"></i></span>
+                                            <select id="stateFilter" class="form-select">
+                                                <option value="all">All States</option>
+                                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                <option value="Punjab">Punjab</option>
+                                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                <option value="Odisha">Odisha</option>
+                                                <option value="Uttarakhand">Uttarakhand</option>
+                                                <option value="Gujarat">Gujarat</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>                </div>
+            </div>
+            <h2 class="section-title" data-aos="fade-up">Featured Temples</h2>
+            <div class="row g-4" id="templesGrid">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="temple-card mb-4">
+                        <img src="img/Thanjavur.jpg" alt="Thanjavur Brihadeeswarar">
+                        <div class="temple-card-content">
+                            <h5>Thanjavur Brihadeeswarar</h5>
+                            <p>UNESCO heritage Chola-era temple with a towering vimana.</p>
+                            <a href="booking.html?temple=Thanjavur Brihadeeswarar" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                            <a href="temple-details.html?temple=Thanjavur Brihadeeswarar" class="btn btn-sm mt-2 learn-more-premium">Learn More</a>
+                            <div class="d-flex gap-2 mt-2">
+                                <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Thanjavur+Brihadeeswarar">Map</a>
+                                <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200" data-state="Tamil Nadu">
+                    <div class="temple-card mb-4">
+                        <img src="img/Madurai.JPG" alt="Madurai Meenakshi">
+                        <div class="temple-card-content">
+                            <h5>Madurai Meenakshi</h5>
+                            <p>Famous for its intricate gopurams and vibrant festivals.</p>
+                            <a href="booking.html?temple=Madurai Meenakshi" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                            <a href="temple-details.html?temple=Madurai Meenakshi" class="btn btn-sm mt-2 learn-more-premium">Learn More</a>
+                            <div class="d-flex gap-2 mt-2">
+                                <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Madurai+Meenakshi">Map</a>
+                                <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300" data-state="Andhra Pradesh">
+                    <div class="temple-card mb-4">
+                        <img src="img/Tirupathi.jpg" alt="Tirupati Balaji">
+                        <div class="temple-card-content">
+                            <h5>Tirupati Balaji</h5>
+                            <p>The famed hill temple with grand rituals and large pilgrim crowds.</p>
+                            <a href="booking.html?temple=Tirupati Balaji" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                            <a href="temple-details.html?temple=Tirupati Balaji" class="btn btn-sm mt-2 learn-more-premium">Learn More</a>
+                            <div class="d-flex gap-2 mt-2">
+                                <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Tirupati+Balaji">Map</a>
+                                <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="temple-card mb-4">
+                            <img src="img/HarmandirSahib.jpg" alt="Golden Temple">
+                            <div class="temple-card-content">
+                                <h5>Harmandir Sahib (Golden Temple)</h5>
+                                <p>The spiritual center of Sikhism located in Amritsar, known for its golden sanctum and langar.</p>
+                                <a href="booking.html?temple=Harmandir Sahib (Golden Temple)" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="#" class="btn btn-sm mt-2 learn-more" data-name="Harmandir Sahib (Golden Temple)">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Golden+Temple+Amritsar">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                        <div class="temple-card mb-4">
+                            <img src="img/Vaishnodevi.jpg" alt="Vaishno Devi">
+                            <div class="temple-card-content">
+                                <h5>Vaishno Devi</h5>
+                                <p>Major pilgrimage destination in Jammu & Kashmir; the cave shrine of the Mother Goddess.</p>
+                                <a href="booking.html?temple=Vaishno Devi" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="#" class="btn btn-sm mt-2 learn-more" data-name="Vaishno Devi">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Vaishno+Devi">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
+                        <div class="temple-card mb-4">
+                            <img src="img/KashiVishwanath.jpg" alt="Kashi Vishwanath">
+                            <div class="temple-card-content">
+                                <h5>Kashi Vishwanath</h5>
+                                <p>One of the twelve Jyotirlingas in Varanasi, a central site of Hindu devotion on the Ganges.</p>
+                                <a href="booking.html?temple=Kashi Vishwanath" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="#" class="btn btn-sm mt-2 learn-more" data-name="Kashi Vishwanath">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Kashi+Vishwanath">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="700">
+                        <div class="temple-card mb-4">
+                            <img src="img/KonarkSun.jpg" alt="Konark Sun Temple" style="width:100%;height:150px;object-fit:cover;display:block;">
+                            <div class="temple-card-content">
+                                <h5>Konark Sun Temple</h5>
+                                <p>13th-century Sun Temple in Odisha known for its chariot-shaped architecture and intricate stone carvings.</p>
+                                <a href="booking.html?temple=Konark Sun Temple" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="temple-details.html?temple=Konark Sun Temple" class="btn btn-sm mt-2 learn-more-premium">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Konark+Sun+Temple">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="800">
+                        <div class="temple-card mb-4">
+                            <img src="img/Kedarnath.jpg" alt="Kedarnath">
+                            <div class="temple-card-content">
+                                <h5>Kedarnath</h5>
+                                <p>High-altitude shrine in the Himalayas, part of the Char Dham pilgrimage and dedicated to Lord Shiva.</p>
+                                <a href="booking.html?temple=Kedarnath" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="#" class="btn btn-sm mt-2 learn-more" data-name="Kedarnath">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Kedarnath+Temple">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="900">
+                        <div class="temple-card mb-4">
+                            <img src="img/JagannathPuri.jpg" alt="Jagannath Puri">
+                            <div class="temple-card-content">
+                                <h5>Jagannath Puri</h5>
+                                <p>Famous for the Rath Yatra chariot festival; one of the Char Dham pilgrimage sites in Odisha.</p>
+                                <a href="booking.html?temple=Jagannath Puri" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="#" class="btn btn-sm mt-2 learn-more" data-name="Jagannath Puri">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Jagannath+Puri">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="1000">
+                        <div class="temple-card mb-4">
+                            <img src="img/SomnathTemple.jpg" alt="Somnath">
+                            <div class="temple-card-content">
+                                <h5>Somnath Temple</h5>
+                                <p>Ancient temple in Gujarat on the Arabian Sea coast, one of the twelve Jyotirlingas with a long history of reconstruction.</p>
+                                <a href="booking.html?temple=Somnath Temple" class="btn btn-sm book-btn-premium card-action-btn book-btn"><i class="fas fa-calendar-check me-1"></i>Book Darshan</a>
+                                <a href="temple-details.html?temple=Somnath Temple" class="btn btn-sm mt-2 learn-more-premium">Learn More</a>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a class="btn btn-sm btn-outline-light card-action-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Somnath+Temple">Map</a>
+                                    <button class="btn btn-sm btn-outline-light card-action-btn share-btn"> <i class="fas fa-share-alt me-1"></i> Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <div id="noResults" class="text-center mt-4" style="display:none;color:rgba(255,255,255,0.85);">No temples match your search.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-om me-2"></i>PunyaYatra</h5>
+                    <p class="mt-2">Plan pilgrimages, book darshan slots, and travel comfortably to India's sacred temples.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links mt-2">
+                        <a href="home.html">Home</a>
+                        <a href="temples.html">Temples</a>
+                        <a href="hotels.html">Hotels</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Popular Temples</h5>
+                    <div class="footer-links mt-2">
+                        <a href="temple-details.html?temple=Tirupati Balaji">Tirupati Balaji</a>
+                        <a href="temple-details.html?temple=Vaishno Devi">Vaishno Devi</a>
+                        <a href="temple-details.html?temple=Harmandir Sahib (Golden Temple)">Golden Temple</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Contact</h5>
+                    <p class="mt-2"><i class="fas fa-phone me-2"></i>+91 98765 43210</p>
+                    <p><i class="fas fa-envelope me-2"></i>info@punyayatra.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+   
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+   
+
+
+        <!-- Saved Temples Modal removed per user request -->
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 900, once: true });
+
+</script>
+    <script src="scripts.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const templeSearch = document.getElementById('templeSearch');
+    const templesGrid = document.getElementById('templesGrid');
+    const templeCards = templesGrid.querySelectorAll('.col-md-4');
+    const noResults = document.getElementById('noResults');
+
+    templeSearch.addEventListener('keyup', function () {
+        const searchQuery = templeSearch.value.toLowerCase();
+        let visibleCount = 0;
+
+        templeCards.forEach(card => {
+            const templeName = card.querySelector('h5').textContent.toLowerCase();
+            const templeDescription = card.querySelector('p').textContent.toLowerCase();
+
+            if (templeName.includes(searchQuery) || templeDescription.includes(searchQuery)) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        if (visibleCount === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    });
+});
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const shareButtons = document.querySelectorAll('.share-btn');
+
+    shareButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const templeCard = this.closest('.temple-card-content');
+            const templeNameElement = templeCard.querySelector('h5');
+            if (!templeNameElement) return;
+
+            const templeName = templeNameElement.textContent;
+            const shareUrl = `${location.protocol}//${location.host}/temple-details.html?temple=${encodeURIComponent(templeName)}`;
+
+            const shareData = {
+                title: `Discover ${templeName}`,
+                text: `Learn more about ${templeName} on PunyaYatra.`,
+                url: shareUrl,
+            };
+
+            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                navigator.share(shareData)
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
+            } else {
+                navigator.clipboard.writeText(shareUrl).then(function() {
+                    alert('Link copied to clipboard!');
+                }, function(err) {
+                    console.error('Could not copy link: ', err);
+                    alert('Failed to copy link. Please copy it manually.');
+                });
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
